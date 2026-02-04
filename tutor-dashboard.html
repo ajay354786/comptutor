@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutor Dashboard - CompTutor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="navBar">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h2 style="margin:0;">🎓 CompTutor <span class="muted">(Tutor Panel)</span></h2>
+      <div>
+        <button class="btnPro ghost" id="btnHome">Home</button>
+        <button class="btnPro primary" id="logoutBtn" style="display:none;">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="section soft">
+  <div class="wrap centerWrap">
+    <div class="dashGrid">
+
+      <!-- LOADING STATE -->
+      <div class="dashCard" id="tutorLoadingCard" style="text-align:center; padding:40px;">
+        <div style="font-size:48px; margin-bottom:15px;">⏳</div>
+        <h3>Loading Dashboard...</h3>
+        <p class="muted">Please wait while we fetch your data</p>
+      </div>
+
+      <div class="dashCard" id="tutorPanel" style="display:none;">
+        <h3>👨‍🏫 Tutor Dashboard</h3>
+        <div class="statusPro" id="tutorStatus">Loading...</div>
+
+        <!-- Wallet Section -->
+        <div class="panel inner" style="background:#f0f9ff;border:2px solid #0066ff;margin-top:15px;">
+          <h4 style="margin:0 0 15px;color:#0066ff;">💰 Tutor Wallet</h4>
+          <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:15px;">
+            <div id="availableBalanceClickable" style="background:white;padding:12px;border-radius:8px;border-left:4px solid #00cc00;cursor:pointer;transition:all 0.3s ease;user-select:none;" onmouseover="this.style.backgroundColor='#f0fff0';" onmouseout="this.style.backgroundColor='white';">
+              <div class="muted" style="font-size:12px;">Available Withdrawal Balance</div>
+              <div style="font-size:24px;font-weight:bold;color:#00cc00;">₹<span id="walletBalance">0</span></div>
+              <div class="muted" style="font-size:10px;margin-top:6px;">👆 Click to View</div>
+            </div>
+          </div>
+
+
+
+          <div style="margin-bottom:15px;">
+            <h5 style="margin:0 0 8px;">Bank Account</h5>
+            <div id="bankAccountInfo" style="background:white;padding:12px;border-radius:8px;"></div>
+          </div>
+
+          <!-- Payment Methods Section -->
+          <div style="margin-bottom:15px;">
+            <h5 style="margin:0 0 8px;">💳 Payment Methods</h5>
+            <div id="paymentMethodsInfo" style="background:white;padding:12px;border-radius:8px;margin-bottom:10px;"></div>
+            <button class="btnPro ghost" id="btnAddPaymentMethod" style="width:100%;">+ Add Payment Method</button>
+          </div>
+
+          <button class="btnPro primary" id="btnAddBankAccount" style="width:100%;margin-bottom:8px;">Add Bank Account</button>
+          <button class="btnPro ghost" id="btnRequestWithdrawal" style="width:100%;">Request Withdrawal</button>
+        </div>
+
+        <!-- Payment Method Modal -->
+        <div class="modal" id="paymentMethodModal" style="display:none;">
+          <div class="modalBox">
+            <h3>Add Payment Method</h3>
+            
+            <label>Payment Method Type</label>
+            <select id="pmType" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;margin-bottom:12px;">
+              <option value="">-- Select Method --</option>
+              <option value="upi">UPI ID</option>
+              <option value="phone">Phone/GPay</option>
+              <option value="paypal">PayPal</option>
+            </select>
+
+            <label id="pmLabelValue">UPI ID</label>
+            <input id="pmValue" placeholder="upi@bank or 9876543210" />
+
+            <label id="pmLabelName">UPI Holder Name</label>
+            <input id="pmName" placeholder="Name" />
+
+            <button class="btnPro primary full" id="btnSavePaymentMethod">Save Method</button>
+            <button class="btnPro dark full" id="btnClosePaymentModal" style="margin-top:8px;">Close</button>
+          </div>
+        </div>
+
+        <!-- Bank Account Form Modal -->
+        <div class="modal" id="bankAccountModal" style="display:none;">
+          <div class="modalBox">
+            <h3>Add Bank Account</h3>
+            <label>Account Holder Name</label>
+            <input id="bankHolderName" placeholder="Name as per bank" />
+
+            <label>Bank Name</label>
+            <input id="bankName" placeholder="E.g., HDFC Bank" />
+
+            <label>Account Number</label>
+            <input id="bankAccount" placeholder="Account number" />
+
+            <label>IFSC Code</label>
+            <input id="bankIFSC" placeholder="E.g., HDFC0000123" />
+
+            <button class="btnPro primary full" id="btnSaveBankAccount">Save Account</button>
+            <button class="btnPro dark full" id="btnCloseBankModal" style="margin-top:8px;">Close</button>
+          </div>
+        </div>
+
+        <!-- Withdrawal Request Modal -->
+        <div class="modal" id="withdrawalModal" style="display:none;">
+          <div class="modalBox">
+            <h3>Request Withdrawal</h3>
+            
+            <label>Withdrawal Amount</label>
+            <input id="withdrawalAmount" type="number" placeholder="Enter amount" min="1" />
+
+            <div style="background:#f0f0f0;padding:10px;border-radius:4px;margin:10px 0;">
+              <small id="withdrawalInfo">Enter amount to see details</small>
+            </div>
+
+            <button class="btnPro primary full" id="btnConfirmWithdrawal">Request Withdrawal</button>
+            <button class="btnPro dark full" id="btnCloseWithdrawalModal" style="margin-top:8px;">Close</button>
+          </div>
+        </div>
+
+        <!-- Available Balance Modal -->
+        <div class="modal" id="availableBalanceModal" style="display:none;">
+          <div class="modalBox" style="max-width:650px;max-height:85vh;overflow-y:auto;padding:0;">
+            <!-- Header -->
+            <div style="background:linear-gradient(135deg,#4c63ff,#7c5cff);color:white;padding:20px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <h3 style="margin:0 0 8px;font-size:18px;">💰 Wallet & Earnings</h3>
+                <p style="margin:0;font-size:12px;opacity:0.9;">Real-time earnings tracking</p>
+              </div>
+              <button class="btnPro dark" id="btnCloseAvailableBalanceModal" style="padding:6px 12px;font-size:14px;background:rgba(255,255,255,0.2);border:1px solid white;">✕ Close</button>
+            </div>
+
+            <div style="padding:20px;">
+              <!-- Balance Card -->
+              <div style="background:linear-gradient(135deg,#f0f9ff,#e8f5ff);border:2px solid #4c63ff;border-radius:12px;padding:20px;margin-bottom:20px;">
+                <div style="color:#0066ff;font-size:13px;font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Available Balance</div>
+                <div style="font-size:36px;font-weight:900;color:#0066ff;margin-bottom:12px;">₹<span id="modalAvailableBalance">0</span></div>
+                <div style="border-top:1px solid #ccc;padding-top:12px;">
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px;">
+                    <div>
+                      <div class="muted">Admin Added</div>
+                      <div style="font-weight:bold;color:#0066ff;">₹<span id="walletAdminBalance">0</span></div>
+                    </div>
+                    <div>
+                      <div class="muted">Daily Earnings</div>
+                      <div style="font-weight:bold;color:#0066ff;">₹<span id="walletDailyEarnings">0</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- How It Works -->
+              <div style="background:#fff5f0;border-left:4px solid #ff9900;border-radius:8px;padding:12px;margin-bottom:20px;">
+                <div style="font-size:13px;font-weight:600;color:#ff6b35;margin-bottom:6px;">💡 How It Works</div>
+                <div style="font-size:12px;color:#666;line-height:1.6;">
+                  <p style="margin:0 0 6px;">Each student earns you <b>₹800 in 30 days</b></p>
+                  <p style="margin:0;">Daily rate: <b>₹26.67/day</b> × number of active students</p>
+                </div>
+              </div>
+
+              <!-- Active Students -->
+              <div style="margin-bottom:15px;">
+                <h5 style="margin:0 0 12px;color:#111;font-size:14px;font-weight:bold;display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:18px;">📚</span> Active Students (Earning Daily)
+                </h5>
+                <div id="availableBalanceStudentList" class="list" style="max-height:300px;overflow-y:auto;"></div>
+              </div>
+
+              <!-- Info Box -->
+              <div style="background:#f3f5ff;border-radius:8px;padding:12px;font-size:12px;color:#666;line-height:1.6;">
+                <b style="color:#4c63ff;">📊 Daily Breakdown Example:</b>
+                <ul style="margin:6px 0 0;padding-left:20px;">
+                  <li>Day 1: ₹26.67 added</li>
+                  <li>Day 15: ₹400.05 earned</li>
+                  <li>Day 30: ₹800.00 earned (Full payout)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        <!-- Previous Requests -->
+        <div class="panel inner" style="margin-top:15px;">
+          <h4 style="margin:0 0 10px;">Recent Withdrawal Requests</h4>
+          <div id="withdrawalRequestsList" class="list"></div>
+        </div>
+
+        <div class="panel inner">
+          <h4 style="margin:0 0 10px;">Assigned Students</h4>
+          <div id="assignedStudents" class="list"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap copy">© 2026 CompTutor - Tutor Dashboard</div>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

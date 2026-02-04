@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutor Sign Up - CompTutor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="navBar">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h2 style="margin:0;">🎓 CompTutor</h2>
+      <div>
+        <button class="btnPro ghost" id="btnHome">Home</button>
+        <button class="btnPro primary" id="logoutBtn" style="display:none;">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="section" style="background:linear-gradient(135deg,#f3f5ff 0%,#fff9f0 100%);">
+  <div class="wrap centerWrap" style="max-width:1200px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;" id="tutorGridLayout">
+      <!-- LEFT SIDE - BENEFITS -->
+      <div id="tutorBenefitsPanel">
+        <div style="margin-bottom:24px;">
+          <h1 style="font-size:42px;line-height:1.1;margin-bottom:8px;background:linear-gradient(135deg,#4c63ff,#7c5cff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">👨‍🏫 Start Teaching & Earn</h1>
+          <p style="color:#ff6b35;font-size:32px;font-weight:bold;margin:0 0 8px 0;">₹800 Per Student</p>
+          <div style="background:linear-gradient(90deg,#4c63ff,#7c5cff);border-radius:12px;padding:16px;color:white;margin-bottom:16px;">
+            <p style="margin:0 0 8px 0;font-size:14px;opacity:0.95;">💼 Earn Monthly with Just 30 Students:</p>
+            <p style="margin:0;font-size:28px;font-weight:bold;">₹24,000 /Month</p>
+            <p style="margin:6px 0 0 0;font-size:12px;opacity:0.9;">₹800 × 30 students = ₹24,000 guaranteed income</p>
+          </div>
+        </div>
+
+        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;color:#333;">Join India's fastest-growing online tutoring platform. Help students master computer basics while building a sustainable income stream with <b>complete flexibility</b>.</p>
+
+        <h3 style="margin-top:0;margin-bottom:16px;font-size:18px;color:#111;font-weight:bold;">✨ Why Professional Tutors Choose CompTutor</h3>
+        <div style="background:#f3f5ff;border-left:4px solid #4c63ff;padding:14px;border-radius:8px;margin-bottom:16px;">
+          <div style="display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;">
+            <span style="font-size:22px;min-width:32px;">💰</span>
+            <div>
+              <b style="font-size:15px;color:#111;">Guaranteed Daily Earnings</b>
+              <p style="margin:4px 0 0;color:#666;font-size:13px;">₹26.67 per day per student • 30 days = ₹800 guaranteed • Instant withdrawals</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;">
+            <span style="font-size:22px;min-width:32px;">🕐</span>
+            <div>
+              <b style="font-size:15px;color:#111;">100% Flexible Schedule</b>
+              <p style="margin:4px 0 0;color:#666;font-size:13px;">Teach whenever you want - mornings, evenings, weekends, or holidays</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;">
+            <span style="font-size:22px;min-width:32px;">🎥</span>
+            <div>
+              <b style="font-size:15px;color:#111;">Your Choice of Medium</b>
+              <p style="margin:4px 0 0;color:#666;font-size:13px;">Video calls, Google Meet, WhatsApp, in-person - You decide what works best</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;">
+            <span style="font-size:22px;min-width:32px;">🎯</span>
+            <div>
+              <b style="font-size:15px;color:#111;">Complete Teaching Freedom</b>
+              <p style="margin:4px 0 0;color:#666;font-size:13px;">Design your curriculum, set pace, choose teaching methods - total autonomy</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;">
+            <span style="font-size:22px;min-width:32px;">📱</span>
+            <div>
+              <b style="font-size:15px;color:#111;">Instant Dashboard</b>
+              <p style="margin:4px 0 0;color:#666;font-size:13px;">Track earnings, student progress, and payments in real-time - 24/7</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <span style="font-size:22px;min-width:32px;">🚀</span>
+            <div>
+              <b style="font-size:15px;color:#111;">Earn While Growing</b>
+              <p style="margin:4px 0 0;color:#666;font-size:13px;">Build your reputation and earn more as you gain additional students</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:linear-gradient(90deg,#f0fff0,#e6ffe6);border-left:4px solid #00cc00;border-radius:8px;padding:14px;margin-bottom:12px;">
+          <p style="margin:0;color:#006600;font-weight:bold;font-size:14px;">✅ Trusted by 500+ Tutors | ⭐ 4.8/5 Rating | 🏆 Recommended Platform</p>
+        </div>
+
+        <p style="font-size:12px;color:#999;margin:12px 0 0 0;">🎓 No Commission • No Hidden Charges • Direct Payment • 100% Transparent</p>
+      </div>
+
+      <!-- RIGHT SIDE - AUTH FORM -->
+      <div class="dashCard" id="tutorAuthCard" style="background:white;border:1px solid #e8e8e8;box-shadow:0 8px 32px rgba(76,99,255,0.12);">
+        <div style="display:flex;gap:10px;margin-bottom:16px;">
+          <button class="tab active" id="tabTutorSignupBtn" data-tab="signup">Create Account</button>
+          <button class="tab" id="tabTutorLoginBtn" data-tab="login">Login</button>
+        </div>
+
+        <!-- SIGNUP FORM -->
+        <div id="tutorSignupForm">
+          <h3 style="margin-top:0;">Start Earning Today</h3>
+          <p class="muted" style="margin-bottom:16px;">Create account in 2 minutes. Start teaching immediately!</p>
+          
+          <label>Full Name</label>
+          <input id="tName" placeholder="Your name" />
+
+          <label>Phone</label>
+          <input id="tPhone" placeholder="10-digit phone number" />
+
+          <label>Email</label>
+          <input id="tEmail" type="email" placeholder="your@email.com" />
+
+          <label>Password</label>
+          <input id="tPass" type="password" placeholder="Secure password" />
+
+          <button class="btnPro primary full" id="btnTutorSignup">Create & Start Earning</button>
+          <p class="muted tiny" style="margin-top:10px;text-align:center;">Already registered? Click <b>Login</b> above</p>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="tutorLoginForm" style="display:none;">
+          <h3 style="margin-top:0;">Welcome Back, Tutor!</h3>
+          <p class="muted" style="margin-bottom:16px;">Login to check your dashboard & earnings</p>
+          
+          <label>Email</label>
+          <input id="tLoginEmail" type="email" placeholder="your@email.com" />
+
+          <label>Password</label>
+          <input id="tLoginPass" type="password" placeholder="Secure password" />
+
+          <button class="btnPro primary full" id="btnTutorLogin">Login to Dashboard</button>
+          <p class="muted tiny" style="margin-top:10px;text-align:center;">
+            Don't have account? Click <b>Create Account</b> above<br/>
+            <a id="btnForgotPasswordTutor" style="color:#0066ff;cursor:pointer;text-decoration:underline;">Forgot Password?</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORGOT PASSWORD MODAL - TUTOR -->
+<div id="forgotPasswordModalTutor" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;z-index:9999;">
+  <div style="background:white;border-radius:8px;padding:30px;max-width:400px;width:90%;box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+    <h3 style="margin-top:0;">Reset Your Password</h3>
+    <p class="muted" style="margin-bottom:20px;">Enter your email and we'll send you a password reset request</p>
+    
+    <label>Email Address</label>
+    <input id="forgotPasswordEmailTutor" type="email" placeholder="your@email.com" />
+    
+    <label>New Password</label>
+    <input id="forgotPasswordNewPasswordTutor" type="password" placeholder="Enter your new password" />
+    
+    <div style="display:flex;gap:10px;margin-top:20px;">
+      <button class="btnPro primary full" id="btnSubmitForgotPasswordTutor">Set New Password</button>
+      <button class="btnPro ghost" id="btnCloseForgotPasswordTutor" style="flex:1;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="wrap copy">© 2026 CompTutor Tutor Portal</div>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard - CompTutor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="navBar">
+  <div class="wrap navInner">
+    <div class="brandPro" onclick="location.href='index.html'">
+      <div class="brandLogo">🎓</div>
+      <div>
+        <div class="brandName">Student Dashboard</div>
+        <div class="brandTag">Pay ₹999 & Start Learning</div>
+      </div>
+    </div>
+
+    <div class="navBtns">
+      <button class="btnPro ghost" id="btnHome">Home</button>
+      <button class="btnPro dark" id="logoutBtn" style="display:none;">Logout</button>
+    </div>
+  </div>
+</header>
+
+<section class="section soft">
+  <div class="wrap centerWrap">
+    <div class="dashGrid">
+
+      <div class="dashCard" id="studentAuthCard">
+        <div style="display:flex;gap:10px;margin-bottom:16px;">
+          <button class="tab active" id="tabSignupBtn" data-tab="signup">Create Account</button>
+          <button class="tab" id="tabLoginBtn" data-tab="login">Login</button>
+        </div>
+
+        <!-- SIGNUP FORM -->
+        <div id="signupForm">
+          <h3 style="margin-top:0;">Create Student Account</h3>
+          <label>Name</label>
+          <input id="sName" placeholder="Your name" />
+
+          <label>Phone</label>
+          <input id="sPhone" placeholder="Phone number" />
+
+          <label>Email</label>
+          <input id="sEmail" type="email" placeholder="Email" />
+
+          <label>Password</label>
+          <input id="sPass" type="password" placeholder="Password" />
+
+          <button class="btnPro primary full" id="btnStudentSignup">Create Account</button>
+          <p class="muted tiny" style="margin-top:10px;">Already have account? Click Login tab above</p>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="loginForm" style="display:none;">
+          <h3 style="margin-top:0;">Student Login</h3>
+          <label>Email</label>
+          <input id="sLoginEmail" type="email" placeholder="Email" />
+
+          <label>Password</label>
+          <input id="sLoginPass" type="password" placeholder="Password" />
+
+          <button class="btnPro primary full" id="btnStudentLogin">Login</button>
+          <p class="muted tiny" style="margin-top:10px;">
+            Don't have account? Click Create Account tab above<br/>
+            <a id="btnForgotPasswordStudent" style="color:#0066ff;cursor:pointer;text-decoration:underline;">Forgot Password?</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- FORGOT PASSWORD MODAL - STUDENT -->
+      <div id="forgotPasswordModalStudent" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;z-index:9999;">
+        <div style="background:white;border-radius:8px;padding:30px;max-width:400px;width:90%;box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+          <h3 style="margin-top:0;">Reset Your Password</h3>
+          <p class="muted" style="margin-bottom:20px;">Enter your email and new password</p>
+          
+          <label>Email Address</label>
+          <input id="forgotPasswordEmailStudent" type="email" placeholder="your@email.com" />
+          
+          <label>New Password</label>
+          <input id="forgotPasswordNewPasswordStudent" type="password" placeholder="Enter your new password" />
+          
+          <div style="display:flex;gap:10px;margin-top:20px;">
+            <button class="btnPro primary full" id="btnSubmitForgotPasswordStudent">Set New Password</button>
+            <button class="btnPro ghost" id="btnCloseForgotPasswordStudent" style="flex:1;">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashCard" id="studentPanel" style="display:none;">
+        <h3>Welcome, <span id="studentWelcome"></span></h3>
+
+        <div class="kpiGrid">
+          <div class="kpi"><b>Status</b><span id="statusBox">Loading...</span></div>
+          <div class="kpi"><b>Plan Validity</b><span id="planValidity">Not Started</span></div>
+          <div class="kpi" style="flex-direction: column; align-items: flex-start;">
+            <b>Your Tutor</b>
+            <div style="font-size:14px; color:#666; margin-top:8px;">
+              <div id="tutorNameDisplay" style="font-weight:bold; color:#0066ff; font-size:16px;">Not Assigned</div>
+              <div id="tutorPhoneDisplay" style="color:#999; margin-top:4px;"></div>
+              <button class="btnPro dark" id="btnChangeTutor" style="margin-top:10px; padding:6px 12px; font-size:12px; display:none;">Change Tutor</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHANGE TUTOR MODAL -->
+        <div id="changeTutorModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+          <div style="background:white; padding:30px; border-radius:12px; max-width:500px; width:90%;">
+            <h3 style="margin-top:0;">Request Tutor Change</h3>
+            
+            <label>Reason for Change</label>
+            <textarea id="changeTutorReason" placeholder="Please explain why you want to change your tutor..." style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px; min-height:120px; resize:vertical; font-family:Arial;"></textarea>
+
+            <div style="display:flex; gap:10px; margin-top:15px;">
+              <button class="btnPro primary full" id="btnSubmitChangeTutor">Submit Request</button>
+              <button class="btnPro ghost full" id="btnCancelChangeTutor">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel inner" id="shiftSection" style="display:none;">
+          <h4 style="margin:0 0 15px;">⏰ Choose Your Study Time Slot</h4>
+          <p class="muted" style="margin-bottom:12px;">Select which hour of the day you want to study. Your tutor will adjust to your timing.</p>
+          
+          <label>Select Your Preferred Study Hour (24-Hour Format)</label>
+          <select id="shiftSelect" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;margin-bottom:10px;">
+            <option value="">-- Choose Hour --</option>
+            <optgroup label="🌙 Night (12:00 AM - 5:00 AM)">
+              <option value="00">12:00 AM - 1:00 AM</option>
+              <option value="01">1:00 AM - 2:00 AM</option>
+              <option value="02">2:00 AM - 3:00 AM</option>
+              <option value="03">3:00 AM - 4:00 AM</option>
+              <option value="04">4:00 AM - 5:00 AM</option>
+              <option value="05">5:00 AM - 6:00 AM</option>
+            </optgroup>
+            <optgroup label="🌅 Morning (6:00 AM - 11:00 AM)">
+              <option value="06">6:00 AM - 7:00 AM</option>
+              <option value="07">7:00 AM - 8:00 AM</option>
+              <option value="08">8:00 AM - 9:00 AM</option>
+              <option value="09">9:00 AM - 10:00 AM</option>
+              <option value="10">10:00 AM - 11:00 AM</option>
+              <option value="11">11:00 AM - 12:00 PM</option>
+            </optgroup>
+            <optgroup label="☀️ Afternoon (12:00 PM - 5:00 PM)">
+              <option value="12">12:00 PM - 1:00 PM</option>
+              <option value="13">1:00 PM - 2:00 PM</option>
+              <option value="14">2:00 PM - 3:00 PM</option>
+              <option value="15">3:00 PM - 4:00 PM</option>
+              <option value="16">4:00 PM - 5:00 PM</option>
+              <option value="17">5:00 PM - 6:00 PM</option>
+            </optgroup>
+            <optgroup label="🌆 Evening (6:00 PM - 11:00 PM)">
+              <option value="18">6:00 PM - 7:00 PM</option>
+              <option value="19">7:00 PM - 8:00 PM</option>
+              <option value="20">8:00 PM - 9:00 PM</option>
+              <option value="21">9:00 PM - 10:00 PM</option>
+              <option value="22">10:00 PM - 11:00 PM</option>
+              <option value="23">11:00 PM - 12:00 AM</option>
+            </optgroup>
+          </select>
+
+          <button class="btnPro primary full" id="btnSubmitShift">Submit Time Slot Request</button>
+        </div>
+
+        <div class="panel inner" id="buyCourseSection">
+          <h4 style="margin:0 0 10px;">Buy Course / Payment</h4>
+
+          <div class="item" style="background:#f8f9ff;border-color:#e5e8ff;">
+            <div><b>UPI ID:</b> <span id="upiId">Loading...</span></div>
+            <div><b>Account Name:</b> <span id="upiName">Loading...</span></div>
+            <div class="muted tiny">Pay ₹999 then transaction details submit karo.</div>
+          </div>
+
+          <button class="btnPro primary full" id="btnBuy" style="margin-top:10px;">Buy Course</button>
+
+          <div class="panel inner" id="payForm" style="display:none;">
+            <h4 style="margin:0 0 10px;">Submit Payment Request</h4>
+
+            <label>Transaction ID</label>
+            <input id="txnId" placeholder="Enter UPI Transaction ID" />
+
+            <label>Date</label>
+            <input id="payDate" type="date" />
+
+            <label>Time</label>
+            <input id="payTime" type="time" />
+
+            <button class="btnPro dark full" id="submitPay">Submit</button>
+          </div>
+        </div>
+
+        <div class="panel inner">
+          <h4 style="margin:0 0 10px;">📋 Your Requests</h4>
+          <div style="margin-bottom:15px;">
+            <b style="display:block;margin-bottom:8px;color:#0066ff;">Shift Requests:</b>
+            <div id="shiftRequests" class="list"></div>
+          </div>
+          <div style="margin-bottom:15px;">
+            <b style="display:block;margin-bottom:8px;color:#9933ff;">Tutor Change Requests:</b>
+            <div id="tutorChangeRequests" class="list"></div>
+          </div>
+          <div>
+            <b style="display:block;margin-bottom:8px;color:#ff6600;">Payment Requests:</b>
+            <div id="myRequests" class="list"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap copy">© 2026 CompTutor Student Panel</div>
+</footer>
+
+<script>
+  // ✅ Check URL parameter to determine which tab to show
+  const params = new URLSearchParams(window.location.search);
+  const tab = params.get('tab') || 'signup'; // Default to signup (Create Account)
+  
+  const tabSignupBtn = document.getElementById("tabSignupBtn");
+  const tabLoginBtn = document.getElementById("tabLoginBtn");
+  const signupForm = document.getElementById("signupForm");
+  const loginForm = document.getElementById("loginForm");
+  
+  if (tab === 'login') {
+    // Show Login tab
+    tabSignupBtn.classList.remove("active");
+    tabLoginBtn.classList.add("active");
+    signupForm.style.display = "none";
+    loginForm.style.display = "block";
+  } else {
+    // Show Create Account tab (default)
+    tabSignupBtn.classList.add("active");
+    tabLoginBtn.classList.remove("active");
+    signupForm.style.display = "block";
+    loginForm.style.display = "none";
+  }
+</script>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

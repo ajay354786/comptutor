@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel - CompTutor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="navBar">
+  <div class="wrap navInner">
+    <div class="brandPro" onclick="location.href='index.html'">
+      <div class="brandLogo">🛡️</div>
+      <div>
+        <div class="brandName">Admin Panel</div>
+        <div class="brandTag">Manage System</div>
+      </div>
+    </div>
+
+    <div class="navBtns">
+      <button class="btnPro ghost" id="btnHome">Home</button>
+      <button class="btnPro dark" id="logoutBtn" style="display:none;">Logout</button>
+    </div>
+  </div>
+</header>
+
+<section class="section soft">
+  <div class="wrap centerWrap">
+    <div class="dashGrid">
+
+      <!-- LOGIN CARD -->
+      <div class="dashCard" id="adminLoginCard">
+        <h3>Admin Login</h3>
+
+        <label>Email</label>
+        <input id="aEmail" type="email" placeholder="Admin email" />
+
+        <label>Password</label>
+        <input id="aPass" type="password" placeholder="Admin password" />
+
+        <button class="btnPro primary full" id="btnAdminLogin">Login</button>
+
+        <p class="muted tiny" style="margin-top:10px;">
+          Only UID in admins collection will work.
+        </p>
+      </div>
+
+      <!-- DASHBOARD CARD -->
+      <div class="dashCard" id="adminPanel" style="display:none;">
+        <h3>Admin Dashboard</h3>
+        <div class="statusPro" id="adminStatus">Loading...</div>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="tabPayments">Payments</button>
+          <button class="tab" data-tab="tabStudents">Students</button>
+          <button class="tab" data-tab="tabTutors">Tutors</button>
+          <button class="tab" data-tab="tabShifts">Shifts</button>
+          <button class="tab" data-tab="tabTutorChanges">Tutor Changes</button>
+          <button class="tab" data-tab="tabWithdrawals">Withdrawals</button>
+          <button class="tab" data-tab="tabPasswordReset">Password Reset</button>
+          <button class="tab" data-tab="tabSettings">Settings</button>
+        </div>
+
+        <!-- PAYMENTS TAB -->
+        <div class="tabBody active" id="tabPayments">
+          <h4>Payment Requests (Pending)</h4>
+          <div id="paymentList" class="list"></div>
+        </div>
+
+        <!-- STUDENTS TAB -->
+        <div class="tabBody" id="tabStudents">
+          <h4>Manage Students</h4>
+          <input type="text" id="studentSearch" placeholder="Search by name, email, or phone..." style="width:100%; padding:8px; margin-bottom:10px; border: 1px solid #ddd; border-radius:4px;">
+          <div id="studentList" class="list"></div>
+        </div>
+
+        <!-- TUTORS TAB -->
+        <div class="tabBody" id="tabTutors">
+          <h4>Manage Tutors</h4>
+          <input type="text" id="tutorSearch" placeholder="Search by name, email, or phone..." style="width:100%; padding:8px; margin-bottom:10px; border: 1px solid #ddd; border-radius:4px;">
+          <div id="tutorList" class="list"></div>
+        </div>
+
+        <!-- WITHDRAWALS TAB -->
+        <div class="tabBody" id="tabWithdrawals">
+          <h4>Tutor Withdrawal Requests</h4>
+          <div id="withdrawalList" class="list"></div>
+        </div>
+
+        <!-- SHIFTS TAB -->
+        <div class="tabBody" id="tabShifts">
+          <h4>⏰ Student Shift Requests</h4>
+          <div id="shiftList" class="list"></div>
+        </div>
+        <!-- TUTOR CHANGE REQUESTS TAB -->
+        <div class="tabBody" id="tabTutorChanges">
+          <h4>🔄 Tutor Change Requests</h4>
+          <div id="tutorChangeList" class="list"></div>
+        </div>
+
+        <!-- PASSWORD RESET REQUESTS TAB -->
+        <div class="tabBody" id="tabPasswordReset">
+          <h4>🔐 Password Reset Requests</h4>
+          <div id="passwordResetList" class="list"></div>
+        </div>
+
+        <!-- SETTINGS TAB -->
+        <div class="tabBody" id="tabSettings">
+          <h4>UPI Settings</h4>
+
+          <label>UPI ID</label>
+          <input id="setUpiId" placeholder="example@upi" />
+
+          <label>Account Name</label>
+          <input id="setUpiName" placeholder="Name" />
+
+          <button class="btnPro dark full" id="saveSettings">Save Settings</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MODAL: Add Points to Tutor Wallet -->
+<div id="addPointsOverlay" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:100; align-items:center; justify-content:center; display:none;">
+  <div style="background:white; border-radius:16px; padding:24px; width:90%; max-width:400px; box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+    <h3 style="margin:0 0 16px; color:#333;">Add Points to Tutor Wallet</h3>
+    
+    <label style="display:block; margin-bottom:8px; font-weight:700;">Tutor Name</label>
+    <input id="apTutorName" type="text" disabled style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; background:#f5f5f5; margin-bottom:16px;">
+    
+    <label style="display:block; margin-bottom:8px; font-weight:700;">Amount (₹)</label>
+    <input id="apAmount" type="number" placeholder="500" min="1" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:16px;">
+    
+    <label style="display:block; margin-bottom:8px; font-weight:700;">Reason</label>
+    <select id="apReason" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:16px;">
+      <option value="manual_adjustment">Manual Adjustment</option>
+      <option value="bonus">Bonus</option>
+      <option value="compensation">Compensation</option>
+      <option value="commission">Commission</option>
+      <option value="other">Other</option>
+    </select>
+    
+    <label style="display:block; margin-bottom:8px; font-weight:700;">Notes</label>
+    <textarea id="apNotes" placeholder="Optional notes..." style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:16px; resize:vertical; min-height:60px;"></textarea>
+    
+    <div style="display:flex; gap:10px;">
+      <button class="btnPro primary" id="btnAddPoints" style="flex:1;">Add Points</button>
+      <button class="btnPro ghost" id="btnCloseAddPoints" style="flex:1;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- PASSWORD RESET APPROVAL MODAL -->
+<div id="passwordResetModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;z-index:9999;">
+  <div style="background:white;border-radius:8px;padding:30px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+    <h3 style="margin-top:0;">Approve/Reject Password Reset</h3>
+    
+    <div style="background:#f9f9f9;padding:15px;border-radius:4px;margin-bottom:20px;">
+      <p><b>User Type:</b> <span id="prUserType"></span></p>
+      <p><b>Email:</b> <span id="prEmail"></span></p>
+      <p><b>Requested:</b> <span id="prDate"></span></p>
+      <p><b>Reason:</b> <span id="prReason"></span></p>
+    </div>
+    
+    <label>New Password (User Requested)</label>
+    <div style="display:flex;gap:10px;margin-bottom:20px;">
+      <input id="newPasswordField" type="text" placeholder="Password will appear here" readonly style="flex:1;background:#f5f5f5;" />
+    </div>
+    
+    <div style="display:flex;gap:10px;">
+      <button class="btnPro primary" id="btnApprovePasswordReset" style="flex:1;background:#00cc00;">✅ Approve & Apply Password</button>
+      <button class="btnPro dark" id="btnRejectPasswordReset" style="flex:1;">❌ Reject</button>
+      <button class="btnPro ghost" id="btnClosePasswordResetModal" style="flex:1;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="wrap copy">© 2026 CompTutor Admin Panel</div>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
