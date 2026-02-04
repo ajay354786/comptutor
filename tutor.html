@@ -14,6 +14,25 @@
 
   gtag('config', 'AW-17930519597');
 </script>
+  <!-- Event snippet for Submit lead form conversion page
+In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-17930519597/zDUJCJ-it_IbEK2I-OVC',
+      'value': 1.0,
+      'currency': 'INR',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
+
 </head>
 <body>
 <nav class="navBar">
@@ -174,4 +193,5 @@
 <script type="module" src="app.js"></script>
 </body>
 </html>
+
 
